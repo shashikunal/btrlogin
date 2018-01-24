@@ -4,15 +4,12 @@
     -->
     <div class="container">
             <div class="card card-container">
-
-
-             
-                <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+     <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
                 <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
                 <p id="profile-name" class="profile-name-card"></p>
                 <h1 style="text-align:center">Register</h1>
                
-                <form class="form-signin" name="userForm" method="post" novalidate>
+                <form ng-submit="signUp()" class="form-signin" name="userForm" novalidate>
                     <span id="reauth-email" class="reauth-email"></span>
                     <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="email" ng-model="user.email" ng-required="true"  autofocus>
                     <div ng-show="userForm.email.$touched && userForm.email.$invalid">
@@ -22,7 +19,7 @@
                     <div ng-show="userForm.password.$touched && userForm.password.$invalid">
                             <small style="color:red; display:block; text-align:center;">Please enter password</small>
                         </div>
-                    
+                        <div class="danger" style="color:red;" ng-show="errMsg">{{errorMessage}}</div>
                     <div id="remember" class="checkbox">
                         <label>
                             <input type="checkbox" value="remember-me"> Remember me

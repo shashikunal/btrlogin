@@ -1,13 +1,13 @@
-var myApp = angular.module("loginApp" , ["ngRoute"]);
+var myApp = angular.module("loginApp" , ["ngRoute" , "firebase"]);
 
 myApp.config(["$routeProvider" , "$locationProvider" , function($routeProvider , $locationProvider){
     $routeProvider.when("/login" , {
-        templateUrl : "/views/login.html"
-        // controller : "registerCtr"
+        templateUrl : "/views/login.html",
+        controller : "registerCtr"
     }).
     when("/register" , {
-        templateUrl : "/views/register.html"
-        // controller : "registerCtr"
+        templateUrl : "/views/register.html",
+        controller : "registerCtr"
     }).
     when("/success",{
         templateUrl : "/views/success.html"
