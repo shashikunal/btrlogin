@@ -10,8 +10,8 @@ myApp.config(["$routeProvider" , "$locationProvider" , function($routeProvider ,
         controller : "registerCtr"
     }).
     when("/success",{
-        templateUrl : "/views/success.html"
-        // controller : "successCtr"
+        templateUrl : "/views/success.html",
+        controller : "successCtr"
     }).
     when("/home" , {
         templateUrl : "/views/home.html"
