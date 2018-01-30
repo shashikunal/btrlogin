@@ -1,4 +1,12 @@
-myApp.controller("registerCtr" , function($scope , $firebaseAuth , $location){
+myApp.controller("registerCtr" , function($scope , $firebaseAuth , $location , myService){
+   
+  $scope.username = myService.getUser();
+  if($scope.username){
+    $location.path("/success");
+  }
+   
+   
+   
     $scope.signUp = function(){
         var username = $scope.user.email;
         var password = $scope.user.password;
@@ -21,6 +29,20 @@ myApp.controller("registerCtr" , function($scope , $firebaseAuth , $location){
     } //register
 
 
+    // onchange
+
+
+var auth = $firebaseAuth();
+auth.$onAuthStateChanged(function(firebaseUser){
+  if(firebaseUser){
+    console.log("signed in " , firebaseUser.uid);
+  }else {
+    console.log("signed out");
+  }
+}); //onAuthMethod
+
+
+
     // signin
     $scope.login = function() {
         $scope.message = "Welcome " + $scope.user.email;
@@ -30,6 +52,8 @@ myApp.controller("registerCtr" , function($scope , $firebaseAuth , $location){
     
         auth.$signInWithEmailAndPassword(username , password).then(function(){
           console.log("succusfully logged in");
+          myService.setUser($scope.user.email);
+          
             $location.path("/success");
         }).catch(function(err){
           console.log(err);
@@ -38,4 +62,45 @@ myApp.controller("registerCtr" , function($scope , $firebaseAuth , $location){
         });
     }; //login
 
+
+    
+
 });
+
+
+
+
+
+// normal service for set user
+
+myApp.service("myService" , ["$location" , "$firebaseAuth" , function($location , $firebaseAuth){
+    
+      var user = "";
+      var auth = $firebaseAuth();
+      return {
+        getUser : function(){
+          if(user == ""){
+            user = localStorage.getItem("userEmail");
+          }
+          return user;
+        },
+        setUser : function(value){
+          localStorage.setItem("userEmail" , value);
+          user = value;
+        },
+
+        logoutUser : function(){
+          auth.$signOut().then(function(){
+            console.log("signout");
+              user = "";
+              localStorage.removeItem("userEmail");
+              localStorage.clear();
+              $location.path("/login");
+    
+          }).catch(function(err){
+            console.log(err);
+          });
+        }
+      };
+    
+    }]); //service code is ending here
